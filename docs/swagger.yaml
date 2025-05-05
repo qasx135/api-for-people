@@ -1,0 +1,24 @@
+info:
+  contact: {}
+  title: Api For People
+  version: "1.0"
+paths:
+  /:
+    post:
+      responses: {}
+      summary: People
+  /persons:
+    get:
+      responses: {}
+      summary: People
+  /persons/{:id}:
+    delete:
+      responses: {}
+      summary: People
+    get:
+      responses: {}
+      summary: People
+    put:
+      responses: {}
+      summary: People
+swagger: "2.0"

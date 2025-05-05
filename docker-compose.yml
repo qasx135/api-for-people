@@ -5,14 +5,20 @@ services:
     container_name: people_api
     image: postgres
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: people_api
+      POSTGRES_USER: ${USER}
+      POSTGRES_PASSWORD: ${PASSWORD}
+      POSTGRES_DB: ${DATABASE}
       PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres
     ports:
       - "5432:5432"
     restart: unless-stopped
+  app:
+    build: .
+    depends_on:
+      - postgres
+    ports:
+      - "8083:8083"
 volumes:
   postgres:

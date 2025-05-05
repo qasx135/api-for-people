@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/jackc/pgx/v5"
+	"github.com/pressly/goose/v3"
 	"log/slog"
 )
 
@@ -27,6 +28,29 @@ func New(ctx context.Context, config *Config) (*pgx.Conn, error) {
 	conn, err := pgx.Connect(ctx, connStr)
 	if err != nil {
 		slog.Error("Failed to connect to PostgresSQL", err)
+		return nil, fmt.Errorf("connection failed: %w", err)
+	}
+	err = Migrate(config)
+	if err != nil {
+		return nil, err
 	}
 	return conn, nil
+}
+
+func Migrate(cfg *Config) error {
+	goose.SetVerbose(true)
+	dbURL := fmt.Sprintf(
+		"postgres://%s:%s@%s:%s/%s",
+		cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.Database,
+	)
+	sqlDB, err := goose.OpenDBWithDriver("postgres", dbURL)
+	if err != nil {
+		return fmt.Errorf("goose open: %w", err)
+	}
+	defer sqlDB.Close()
+
+	if err := goose.Up(sqlDB, "./db/migrations"); err != nil {
+		return fmt.Errorf("goose up: %w", err)
+	}
+	return nil
 }

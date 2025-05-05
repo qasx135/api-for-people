@@ -127,6 +127,9 @@ func NewHandler(ctx context.Context, service *service.Service) *Handler {
 	return &Handler{service: service, ctx: ctx, mu: &sync.Mutex{}}
 }
 
+// @Summary People
+// @Tag create
+// @Router / [post]
 func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 	var person model.PersonFromRequest
 	if err := render.DecodeJSON(r.Body, &person); err != nil {
@@ -153,6 +156,9 @@ func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// @Summary People
+// @Tag getPerson
+// @Router /persons/{:id} [get]
 func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 	slog.Debug("Getting person")
 	id, _ := strconv.Atoi(chi.URLParam(r, "id"))
@@ -165,6 +171,9 @@ func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, r, person)
 }
 
+// @Summary People
+// @Tag getAllPerson
+// @Router /persons [get]
 func (h *Handler) GetAll(w http.ResponseWriter, r *http.Request) {
 	slog.Debug("Getting all persons")
 	params := model.ParseQueryParams(r)
@@ -175,6 +184,9 @@ func (h *Handler) GetAll(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, r, persons)
 }
 
+// @Summary People
+// @Tag opdatePerson
+// @Router /persons/{:id} [put]
 func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 	slog.Debug("Updating person")
 	id, _ := strconv.Atoi(chi.URLParam(r, "id"))
@@ -188,6 +200,9 @@ func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// @Summary People
+// @Tag deletePerson
+// @Router /persons/{:id} [delete]
 func (h *Handler) Delete(w http.ResponseWriter, r *http.Request) {
 	slog.Debug("Deleting person")
 	id, _ := strconv.Atoi(chi.URLParam(r, "id"))

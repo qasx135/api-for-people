@@ -12,6 +12,9 @@ import (
 	"log/slog"
 )
 
+// @title Api For People
+// @version 1.0
+
 func main() {
 	cfg := config.NewConfig()
 	fmt.Println(cfg)

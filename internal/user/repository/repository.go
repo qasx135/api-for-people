@@ -67,7 +67,7 @@ func (r *Repository) Get(ctx context.Context, id int) (model.Person, error) {
 }
 func (r *Repository) GetAll(ctx context.Context, params model.UserQueryParams) ([]model.Person, error) {
 	query := `SELECT name, surname, patronymic, age, gender, nationality FROM persons WHERE isDeleted=false`
-	slog.Debug("Getting all persons with params", params)
+	slog.Info("Getting all persons with params", params)
 	var args []interface{}
 	var whereClauses []string
 
@@ -116,7 +116,7 @@ func (r *Repository) GetAll(ctx context.Context, params model.UserQueryParams) (
 		args = append(args, params.Limit, (params.Page-1)*params.Limit)
 		query += fmt.Sprintf(" LIMIT $%d OFFSET $%d", len(args)-1, len(args))
 	}
-	slog.Debug("Getting all persons", query, args)
+	slog.Info("Getting all persons", query, args)
 	rows, err := r.db.Query(ctx, query, args...)
 	if err != nil {
 		slog.Error("Error during query row", err)

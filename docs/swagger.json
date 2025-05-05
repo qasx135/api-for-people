@@ -1,0 +1,36 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Api For People",
+        "contact": {},
+        "version": "1.0"
+    },
+    "paths": {
+        "/": {
+            "post": {
+                "summary": "People",
+                "responses": {}
+            }
+        },
+        "/persons": {
+            "get": {
+                "summary": "People",
+                "responses": {}
+            }
+        },
+        "/persons/{:id}": {
+            "get": {
+                "summary": "People",
+                "responses": {}
+            },
+            "put": {
+                "summary": "People",
+                "responses": {}
+            },
+            "delete": {
+                "summary": "People",
+                "responses": {}
+            }
+        }
+    }
+}
