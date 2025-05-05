@@ -1,7 +1,7 @@
 version: '3.5'
 
 services:
-  postgres:
+  people_api:
     container_name: people_api
     image: postgres
     environment:
@@ -17,8 +17,14 @@ services:
   app:
     build: .
     depends_on:
-      - postgres
+      - people_api
     ports:
       - "8083:8083"
+    environment:
+      - POSTGRES_HOST=people_api
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=people_api
 volumes:
   postgres:

@@ -26,9 +26,13 @@ func New(ctx context.Context, config *Config) (*pgx.Conn, error) {
 		config.Database,
 	)
 	conn, err := pgx.Connect(ctx, connStr)
+	fmt.Println("--------------------------conn is :", &conn)
 	if err != nil {
 		slog.Error("Failed to connect to PostgresSQL", err)
 		return nil, fmt.Errorf("connection failed: %w", err)
+	}
+	if err := conn.Ping(ctx); err != nil {
+		return nil, fmt.Errorf("failed to ping PostgreSQL: %w", err)
 	}
 	err = Migrate(config)
 	if err != nil {

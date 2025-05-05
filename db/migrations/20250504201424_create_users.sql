@@ -1,6 +1,6 @@
 -- +goose Up
 -- +goose StatementBegin
-CREATE TABLE IF NOT EXISTS persons(
+CREATE TABLE IF NOT EXISTS people_api.persons(
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     surname VARCHAR(255) NOT NULL,
@@ -14,5 +14,5 @@ CREATE TABLE IF NOT EXISTS persons(
 
 -- +goose Down
 -- +goose StatementBegin
-DROP TABLE persons;
+DROP TABLE people_api.persons;
 -- +goose StatementEnd
